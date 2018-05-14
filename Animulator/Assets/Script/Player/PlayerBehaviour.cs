@@ -72,8 +72,6 @@ public class PlayerBehaviour : MonoBehaviour
         {
             distanceToGround = hit.distance;
 
-            Debug.Log(hit.distance);
-
             if (distanceToGround < threshold)
             {
                 IsGround = true;
