@@ -33,26 +33,32 @@ public class Door : InteractionObject
     {
         StopAllCoroutines();
 
-        float direction = Vector3.Dot(transform.forward, playerTransform.forward);
+        float theta = Vector3.Dot(transform.forward, playerTransform.forward);
 
-        //// Forward Open
-        //if(direction > 0f)
-        //{
-        //    StartCoroutine(Tween.TweenTransform.Rotation(axis,
-        //                                                 transform.rotation.ChangeY(maxAngle),
-        //                                                 openTime));
-        //}
+        Vector3 dirAngle = Vector3.Cross(transform.forward, playerTransform.forward);
 
-        //// Backward Open
-        //else
-        //{
-        //    StartCoroutine(Tween.TweenTransform.Rotation(axis,
-        //                                                 transform.rotation.ChangeY(-maxAngle),
-        //                                                 openTime));
-        //}
+        float angle = Mathf.Acos(theta) * Mathf.Rad2Deg;
 
-        Debug.Log(direction);
-   }
+        if (dirAngle.z < 0.0f)
+            angle = 360 - angle;
+
+        // Backward Open
+        if (angle > 180f)
+        {
+            StartCoroutine(Tween.TweenTransform.Rotation(axis,
+                                             transform.rotation.ChangeY(-maxAngle),
+                                             openTime));
+
+        }
+
+        // Forward Open
+        else
+        {
+            StartCoroutine(Tween.TweenTransform.Rotation(axis,
+                                             transform.rotation.ChangeY(maxAngle),
+                                             openTime));
+        }
+    }
 
     public void Return()
     {

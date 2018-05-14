@@ -30,5 +30,14 @@ namespace HD
 
             return newQuaternion;
         }
+
+        public static Vector3 ChangeY(this Vector3 vector, float y)
+        {
+            Vector3 newVector = new Vector3(vector.x,
+                                            y,
+                                            vector.z);
+
+            return newVector;
+        }
     }
 }

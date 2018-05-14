@@ -29,6 +29,10 @@ public class ThunderBolt : MonoBehaviour
 
         transform.rotation =  transform.rotation.ChangeY(yAxis);
 
+        Vector3 position = playerTrans.position.y * Vector3.up * 1.75f;
+
+        transform.position = position;
+
         StartCoroutine(DoThunder());
     }
 
