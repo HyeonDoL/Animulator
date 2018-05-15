@@ -45,19 +45,21 @@ public class Door : InteractionObject
         // Backward Open
         if (angle > 180f)
         {
-            StartCoroutine(Tween.TweenTransform.Rotation(axis,
-                                             transform.rotation.ChangeY(-maxAngle),
-                                             openTime));
+            StartCoroutine(Tween.TweenTransform.LocalRotation(axis,
+                                                              transform.localRotation.ChangeY(-maxAngle),
+                                                              openTime));
 
         }
 
         // Forward Open
         else
         {
-            StartCoroutine(Tween.TweenTransform.Rotation(axis,
-                                             transform.rotation.ChangeY(maxAngle),
-                                             openTime));
+            StartCoroutine(Tween.TweenTransform.LocalRotation(axis,
+                                                              transform.localRotation.ChangeY(maxAngle),
+                                                              openTime));
         }
+
+        Debug.Log(angle + " " + axis.rotation.eulerAngles);
     }
 
     public void Return()

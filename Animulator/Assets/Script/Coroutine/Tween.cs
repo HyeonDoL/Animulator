@@ -140,6 +140,25 @@ public static class Tween
             }
         }
 
+        public static IEnumerator LocalRotation(Transform target, Quaternion end, float time, AnimationCurve curve = null)
+        {
+            float t = 0f;
+
+            Quaternion start = target.localRotation;
+
+            if (curve == null)
+                curve = defaultCurve;
+
+            while (t < 1f)
+            {
+                t += Time.deltaTime / time;
+
+                target.localRotation = Quaternion.Lerp(start, end, curve.Evaluate(t));
+
+                yield return null;
+            }
+        }
+
         public static IEnumerator LocalScale(Transform target, Vector3 end, float time, AnimationCurve curve = null)
         {
             float t = 0f;
