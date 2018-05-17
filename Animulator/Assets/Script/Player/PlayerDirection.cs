@@ -15,9 +15,6 @@ public class PlayerDirection : MonoBehaviour
 
     private void Awake()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = true;
-
         cameraTrans = Camera.main.transform;
     }
 

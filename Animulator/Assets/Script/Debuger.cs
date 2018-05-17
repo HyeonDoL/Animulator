@@ -17,6 +17,12 @@ public class Debuger : MonoBehaviour
     [SerializeField]
     private PlayerBehaviour playerBehaviour;
 
+    private void Awake()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;        
+    }
+
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.C))
@@ -30,6 +36,18 @@ public class Debuger : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
             ScaredMode();
+
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
+        if (Input.GetKeyUp(KeyCode.Tab))
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 
     public void NormalMode()
