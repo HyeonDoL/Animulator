@@ -20,6 +20,18 @@ public class PlayerBehaviour : MonoBehaviour
     public bool IsGround { get; set; }
     public bool IsFalling { get; set; }
 
+    public float MoveSpeed
+    {
+        get
+        {
+            return moveSpeed;
+        }
+        set
+        {
+            moveSpeed = value;
+        }
+    }
+
     private void Awake()
     {
         IsGround = true;
@@ -44,7 +56,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void Move()
     {
-        Vector3 movement = new Vector3(horizontal, 0, vertical) * moveSpeed * Time.deltaTime;
+        Vector3 movement = new Vector3(horizontal, 0, vertical) * MoveSpeed * Time.deltaTime;
 
         transform.Translate(movement, Space.Self);
     }

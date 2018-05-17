@@ -14,6 +14,9 @@ public class Debuger : MonoBehaviour
     [SerializeField]
     private GameObject[] offObj;
 
+    [SerializeField]
+    private PlayerBehaviour playerBehaviour;
+
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.C))
@@ -39,6 +42,8 @@ public class Debuger : MonoBehaviour
 
         for(int i = 0; i < offObj.Length; ++i)
             offObj[i].SetActive(true);
+
+        playerBehaviour.MoveSpeed = 2.5f;
     }
 
     public void ScaredMode()
@@ -51,5 +56,7 @@ public class Debuger : MonoBehaviour
 
         for (int i = 0; i < offObj.Length; ++i)
             offObj[i].SetActive(false);
+
+        playerBehaviour.MoveSpeed = 2.0f;
     }
 }
