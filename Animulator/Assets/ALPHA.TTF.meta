@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 6f47c46e42693c4448ff20ff58e62d5a
+timeCreated: 1526575323
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: TypoEnter Stroll10
+  fontNames:
+  - TypoEnter Stroll10
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
