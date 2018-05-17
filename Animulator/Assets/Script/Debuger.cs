@@ -12,7 +12,7 @@ public class Debuger : MonoBehaviour
     private Light flashLight;
 
     [SerializeField]
-    private GameObject directinalLight;
+    private GameObject[] offObj;
 
     private void Update()
     {
@@ -37,7 +37,8 @@ public class Debuger : MonoBehaviour
 
         flashLight.enabled = false;
 
-        directinalLight.SetActive(true);
+        for(int i = 0; i < offObj.Length; ++i)
+            offObj[i].SetActive(true);
     }
 
     public void ScaredMode()
@@ -48,6 +49,7 @@ public class Debuger : MonoBehaviour
 
         //flashLight.enabled = true;
 
-        directinalLight.SetActive(false);
+        for (int i = 0; i < offObj.Length; ++i)
+            offObj[i].SetActive(false);
     }
 }
