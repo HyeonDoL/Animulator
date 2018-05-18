@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class InGameManager : MonoBehaviour
@@ -26,11 +27,27 @@ public class InGameManager : MonoBehaviour
 
     private int findTreasureCount;
 
+    private float timer;
+
+    [Header("UI Instances")]
+
+    [SerializeField]
+    private Text timerLabel;
+
+    [SerializeField]
+    private FoundTreasureUI foundTreasure;
+
+    [SerializeField]
+    private ResultUI result;
+
+
     private void Awake()
     {
         maxTreasureCount = 0;
 
         findTreasureCount = 0;
+
+        timer = Debuger.playType == PlayType.Horror ? 300f : 500f;
 
         spawnList = new List<Transform>();
 
@@ -39,7 +56,33 @@ public class InGameManager : MonoBehaviour
 
     private void Start()
     {
-        
+        UpdateTimeLabel(timer);
+
+        if (Debuger.playType != PlayType.Normal)
+            TreasureSpawn(Debuger.playType == PlayType.Horror ? 1 : 5);
+
+        timerLabel.gameObject.SetActive(Debuger.playType != PlayType.Normal);
+        foundTreasure.gameObject.SetActive(Debuger.playType != PlayType.Normal);
+    }
+
+    private void Update()
+    {
+        if (Debuger.playType != PlayType.Normal)
+        {
+            float oldTimer = timer;
+            timer = timer - Time.deltaTime; //Mathf.Max(timer - Time.deltaTime, 0f);
+
+            if (!(timer > 0f))
+                result.ShowResult(GameResult.Failed);
+
+            if (Mathf.CeilToInt(oldTimer) != Mathf.CeilToInt(timer))
+                UpdateTimeLabel(Mathf.Max(timer));
+        }
+    }
+
+    private void UpdateTimeLabel(float time)
+    {
+        timerLabel.text = string.Concat((time / 60f).ToString("00"), "m ", (time % 60f).ToString("00"), 's');
     }
 
     public void AddSpawnList(Transform spawn)
@@ -50,16 +93,23 @@ public class InGameManager : MonoBehaviour
     public void TreasureSpawn(int treasureCount)
     {
         maxTreasureCount = treasureCount;
+        foundTreasure.Initiallize(treasureCount);
 
-        for(int i = 0; i < treasureCount; ++i)
+        bool[] spawned = new bool[spawnList.Count];
+
+        for (int i = 0; i < treasureCount; ++i)
         {
             Transform treasure = Instantiate<Transform>(treasurePrefab);
 
-            Transform spawn = spawnList[Random.Range(0, spawnList.Count)];
+            int index;
+            do
+            {
+                index = Random.Range(0, spawnList.Count);
+            } while (spawned[index]);
 
-            treasure.position = spawn.position;
-            treasure.rotation = spawn.rotation;
-            treasure.localScale = Vector3.one;
+            spawned[index] = true;
+            Transform spawn = spawnList[index];
+            treasure.localPosition = spawn.localPosition;
         }
     }
 
@@ -67,9 +117,11 @@ public class InGameManager : MonoBehaviour
     {
         findTreasureCount += 1;
 
-        if(findTreasureCount >= maxTreasureCount)
+        foundTreasure.SetFoundTreasureCount(findTreasureCount);
+
+        if (findTreasureCount >= maxTreasureCount)
         {
-            // Game Clear!
+            result.ShowResult(GameResult.Success);
         }
     }
 }
